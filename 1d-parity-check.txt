@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+// Function to perform 1D parity check
+int parityCheck(int data[], int size) {
+    int count = 0,i;
+
+    // Count the number of ones in the data
+    for ( i = 0; i < size; i++) {
+        if (data[i] == 1) {
+            count++;
+        }
+    }
+
+    // Check the parity
+    if (count % 2 == 0) {
+        return 0;  // Even parity
+    } else {
+        return 1;  // Odd parity
+    }
+}
+
+int main() {
+    int s_size,i,r_size;
+    printf("Enter the size of the sender data: ");
+    scanf("%d", &s_size);
+
+    int sdata[s_size];
+    printf("Enter the sender data: ");
+    for ( i = 0; i < s_size; i++) {
+        scanf("%d", &sdata[i]);
+    }
+
+    int sparity = parityCheck(sdata, s_size);
+    
+    printf("Enter the size of the receiver data: ");
+    scanf("%d", &r_size);
+
+    int rdata[s_size];
+    printf("Enter the receiver data:");
+    for ( i = 0; i < r_size; i++) {
+        scanf("%d", &rdata[i]);
+    }
+
+    int rparity = parityCheck(rdata, r_size);
+    
+    if(sparity == rparity)
+    printf("No error");
+    else
+    printf("Error detected");
+//    if (parity == 0) {
+//        printf("Even parity\n");
+//    } else {
+//        printf("Odd parity\n");
+//    }
+
+    return 0;
+}
