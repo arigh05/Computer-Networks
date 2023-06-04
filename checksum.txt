@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<math.h>
+
+int decimalToBinary(int n)
+{
+     int binary=0, rem, num, base=1;
+    num = n;
+    while(num !=0 )
+	 {
+	  rem = num%2;
+	  binary = binary + base * rem;
+	  base = base*10;
+	  num = num/2;
+	 }
+
+    return binary;
+}
+
+int sender(int arr[10],int n)
+{
+    int checksum,checksum1,sum=0,sum1,i;
+    printf("\n****SENDER SIDE****\n");
+    for(i=0;i<n;i++)
+    sum+=arr[i];
+    sum1=decimalToBinary(sum);
+    printf("SUM IS: %d",sum1);
+    checksum=~sum;    //1's complement of sum
+    checksum1=decimalToBinary(checksum);
+    printf("\nCHECKSUM IS:%d",checksum1);
+    return checksum;
+}
+ 
+void receiver(int arr[10],int n,int sch)
+{
+    int checksum,checksum1,sum1, sum=0,i;
+    printf("\n\n****RECEIVER SIDE****\n");
+    for(i=0;i<n;i++)
+        sum+=arr[i];
+    sum1=decimalToBinary(sum);
+    printf("SUM IS:%d",sum1);
+    sum=sum+sch;
+    checksum=~sum;    //1's complement of sum
+    checksum1=decimalToBinary(checksum);
+    printf("\nCHECKSUM IS:%d",checksum1);
+    if(checksum==0)
+    printf("\n Accepted. No error. ");
+    else
+    printf("\n Not accepted. Error detected. ");
+}
+
+int main()
+{
+    int n,sch,rch,i;
+    printf("\n Enter no. of messages transmitted : ");
+    scanf("%d",&n);
+    int arr[n];
+    printf("Enter the messages : \n");
+    for( i=0;i<n;i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+    sch=sender(arr,n);
+    receiver(arr,n,sch);
+}
